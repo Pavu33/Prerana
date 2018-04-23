@@ -11,14 +11,13 @@ const jsonResponse = require('./utils/json-response');
 const index = require('./routes/index');
 const errors = require('./helpers/errors');
 const app = express();
-
-
+const userAuth = require('./routes/user-auth');
 app.use(bodyParser.json({limit: '50mb'}));
 app.use(bodyParser.urlencoded({extended: true, limit: '50mb'}));
 
 app.use(morgan('dev'));
 app.use('/', index);
-
+app.use('/api/userAuth', userAuth);
 /* Routes classifications */
 app.use((req, res) => {
   if (config.mode === 'development') {
@@ -35,3 +34,5 @@ let port = process.env.PORT || config.port;
 app.listen(port, () => {
   console.log('Listening on port ' + port);
 });
+
+
